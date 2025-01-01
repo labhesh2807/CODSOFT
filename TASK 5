@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct book {
+    string title;
+    string author;
+    string isbn;
+    bool available;
+};
+
+vector<book> books;
+
+void add_book() {
+    book b;
+    cout << "enter book title: ";
+    cin.ignore();
+    getline(cin, b.title);
+    cout << "enter book author: ";
+    getline(cin, b.author);
+    cout << "enter book isbn: ";
+    getline(cin, b.isbn);
+    b.available = true;
+    books.push_back(b);
+}
+
+void search_book() {
+    string query;
+    cout << "enter title, author, or isbn to search: ";
+    cin.ignore();
+    getline(cin, query);
+    for (auto &b : books) {
+        if (b.title == query || b.author == query || b.isbn == query) {
+            cout << "title: " << b.title << ", author: " << b.author << ", isbn: " << b.isbn
+                 << ", available: " << (b.available ? "yes" : "no") << "\n";
+            return;
+        }
+    }
+    cout << "book not found.\n";
+}
+
+void checkout_book() {
+    string isbn;
+    cout << "enter isbn to checkout: ";
+    cin.ignore();
+    getline(cin, isbn);
+    for (auto &b : books) {
+        if (b.isbn == isbn && b.available) {
+            b.available = false;
+            cout << "book checked out.\n";
+            return;
+        }
+    }
+    cout << "book not available.\n";
+}
+
+void return_book() {
+    string isbn;
+    cout << "enter isbn to return: ";
+    cin.ignore();
+    getline(cin, isbn);
+    for (auto &b : books) {
+        if (b.isbn == isbn && !b.available) {
+            b.available = true;
+            cout << "book returned.\n";
+            return;
+        }
+    }
+    cout << "invalid isbn or book not checked out.\n";
+}
+
+int main() {
+    int choice;
+    while (true) {
+        cout << "1. add book\n2. search book\n3. checkout book\n4. return book\n5. exit\nenter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            add_book();
+        } else if (choice == 2) {
+            search_book();
+        } else if (choice == 3) {
+            checkout_book();
+        } else if (choice == 4) {
+            return_book();
+        } else if (choice == 5) {
+            break;
+        } else {
+            cout << "invalid choice.\n";
+        }
+    }
+    return 0;
+}
