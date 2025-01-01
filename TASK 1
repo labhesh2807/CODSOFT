@@ -1,0 +1,22 @@
+#include <iostream>
+
+int main() {
+    int number = 7; // fixed number for guessing
+    int guess;
+
+    std::cout << "guess a number between 1 and 10: ";
+
+    do {
+        std::cin >> guess;
+
+        if (guess < number) {
+            std::cout << "too low. try again: ";
+        } else if (guess > number) {
+            std::cout << "too high. try again: ";
+        }
+    } while (guess != number);
+
+    std::cout << "correct! the number was " << number << ".\n";
+
+    return 0;
+}
