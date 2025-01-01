@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+vector<pair<string, bool>> tasks;
+
+void add_task() {
+    string task;
+    cout << "enter a task: ";
+    cin.ignore();
+    getline(cin, task);
+    tasks.push_back({task, false});
+}
+
+void view_tasks() {
+    for (int i = 0; i < tasks.size(); i++) {
+        cout << i + 1 << ". " << tasks[i].first << " [" << (tasks[i].second ? "completed" : "pending") << "]\n";
+    }
+}
+
+void mark_completed() {
+    int index;
+    cout << "enter the task number to mark as completed: ";
+    cin >> index;
+    if (index > 0 && index <= tasks.size()) {
+        tasks[index - 1].second = true;
+    } else {
+        cout << "invalid task number.\n";
+    }
+}
+
+void remove_task() {
+    int index;
+    cout << "enter the task number to remove: ";
+    cin >> index;
+    if (index > 0 && index <= tasks.size()) {
+        tasks.erase(tasks.begin() + index - 1);
+    } else {
+        cout << "invalid task number.\n";
+    }
+}
+
+int main() {
+    int choice;
+    while (true) {
+        cout << "1. add task\n2. view tasks\n3. mark task as completed\n4. remove task\n5. exit\nenter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            add_task();
+        } else if (choice == 2) {
+            view_tasks();
+        } else if (choice == 3) {
+            mark_completed();
+        } else if (choice == 4) {
+            remove_task();
+        } else if (choice == 5) {
+            break;
+        } else {
+            cout << "invalid choice.\n";
+        }
+    }
+    return 0;
+}
